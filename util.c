@@ -62,6 +62,37 @@ void init_esn_weights(ESN* esn, int* in_conn, int** w_conn){
     gsl_matrix_scale(esn->w, 1.0 / gsl_matrix_max_eigenvalue(esn->w));
 }
 
+void set_weights(ESN* esn, int* in_conn, int** w_conn, double** w_in, double** w){
+    for(int i = 0; i < esn->nodes; i++){
+      for(int j = 0; j < esn->inputs + 1; j++){
+        if(in_conn[i] || j == 0){
+          gsl_matrix_set(esn->wIn, i, j, w_in[i][j]);
+        }
+        else{
+          gsl_matrix_set(esn->wIn, i, j, 0.0);
+        }
+      }
+    }
+    for(int i = 0; i < esn->nodes; i++){
+      for(int j = 0; j < esn->nodes; j++){
+        if(w_conn[i][j]){
+          gsl_matrix_set(esn->w, i, j, w[i][j]);
+        }
+        else{
+          gsl_matrix_set(esn->w, i, j, 0);
+        }
+      }
+    }
+    gsl_matrix_scale(esn->w, 1.0 / gsl_matrix_max_eigenvalue(esn->w));
+}
+
+void free_w(double** w, int neurons){
+  for(int i = 0; i < neurons; i++){
+    free(w[i]);
+  }
+  free(w);
+}
+
 int* in_conn(Graph* graph, int nodes){
   int* in_conn_map = malloc(nodes * sizeof(int));
   for(int i = 0; i < nodes; i++){
@@ -125,4 +156,25 @@ void free_w_conn(int** w_conn, int nodes){
     free(w_conn[i]);
   }
   free(w_conn);
+}
+
+double** copy_w(double** src, int nodes){
+  double** w_new = malloc(nodes * sizeof(double*));
+  for(int i = 0; i < nodes; i++){
+    w_new[i] = malloc(nodes * sizeof(double));
+    for(int j = 0; j < nodes; j++){
+      w_new[i][j] = src[i][j];
+    }
+  }
+  return w_new;
+}
+double** copy_w_in(double** src, int nodes, int inputs){
+  double** w_in_new = malloc(nodes * sizeof(double*));
+  for(int i = 0; i < nodes; i++){
+    w_in_new[i] = malloc(nodes * sizeof(inputs + 1));
+    for(int j = 0; j < inputs + 1; j++){
+      w_in_new[i][j] = src[i][j];
+    }
+  }
+  return w_in_new;
 }

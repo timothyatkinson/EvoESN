@@ -32,4 +32,9 @@ void print_in_conn(int* in_conn, int nodes);
 void print_w_conn(int** w_conn, int nodes);
 
 void free_w_conn(int** w_conn, int nodes);
+void set_weights(ESN* esn, int* in_conn, int** w_conn, double** w_in, double** w);
+void free_w(double** w, int neurons);
+
+double** copy_w(double** src, int nodes);
+double** copy_w_in(double** src, int nodes, int inputs);
 #endif
