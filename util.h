@@ -18,6 +18,8 @@
 
 #include "ESN/esn.h"
 
+static double gauss(void);
+
 Graph* build_empty_host_graph();
 Graph* duplicate_graph(Graph *graph);
 int random_int(int min, int max);
