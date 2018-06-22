@@ -1,5 +1,24 @@
 #include "util.h"
 
+double bound(double val, double min, double max){
+  while(val < min){
+    val = val + (max - min);
+  }
+  while(val > max){
+    val = val - (max - min);
+  }
+  return val;
+}
+
+/* generate a random value weighted within the normal (gaussian) distribution */
+double gauss(void)
+{
+  double x = (double)random() / RAND_MAX,
+         y = (double)random() / RAND_MAX,
+         z = sqrt(-2 * log(x)) * cos(2 * M_PI * y);
+  return z;
+}
+
 //Graph duplication function
 Graph* duplicate_graph(Graph *graph)
 {

@@ -1,0 +1,53 @@
+Main = [pickNode]; {switchRed, switchGreen}
+
+pickNode
+(
+  a : list
+)
+[1.0]
+[
+  (n0, a#any)
+  |
+]
+=>
+[
+  (n0, "MUTATE":a#any)
+  |
+]
+interface = {
+  n0
+}
+
+switchRed
+(
+  a : list
+)
+[
+  (n0, "MUTATE":a#red)
+  |
+]
+=>
+[
+  (n0, a#green)
+  |
+]
+interface = {
+  n0
+}
+
+switchGreen
+(
+  a : list
+)
+[
+  (n0, "MUTATE":a#green)
+  |
+]
+=>
+[
+  (n0, a#red)
+  |
+]
+interface = {
+  n0
+}

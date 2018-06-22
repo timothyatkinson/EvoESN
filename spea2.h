@@ -19,6 +19,7 @@
 #include "util.h"
 #include "ESN/train.h"
 #include "ESN/esn.h"
+#include "ESN/rand_util.h"
 
 
 typedef struct Individual{
@@ -27,7 +28,7 @@ typedef struct Individual{
   int inputs;
   int outputs;
   int nodes;
-  int nodes_per_edge;
+  int edges_per_node;
   double leak_rate;
   double input_scale;
   double spectral_radius;
@@ -36,8 +37,6 @@ typedef struct Individual{
 typedef struct Mutate_Params{
   double p_weight_mutate_rate;
   double weight_variance;
-  double weight_min;
-  double weight_max;
   double p_edge_change_rate;
   double p_edge_switch_rate;
   double p_node_switch_rate;
@@ -46,5 +45,11 @@ typedef struct Mutate_Params{
 } Mutate_Params;
 
 ESN* make_esn(Individual* individual);
+Individual* copy_individual(Individual* individual);
+Individual* calloc_individual(int inputs, int outputs, int nodes, int edges_per_node);
+Individual* gen_individual(int inputs, int outputs, int nodes, int edges_per_node);
+void free_individual(Individual* ind);
+void print_individual(Individual* individual);
 
+Individual* random_hill_climb(int inputs, int nodes, int edges_per_node, int outputs, Mutate_Params* params, train_dataset* dataset, int max_steps);
 #endif

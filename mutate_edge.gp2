@@ -1,0 +1,84 @@
+Main = try ([pickSource]; [pickTarget]; [pickNewTarget]; mutateEdge)
+
+pickSource
+(
+  a : list
+)
+[1.0]
+[
+  (n0, a#any)
+  |
+]
+=>
+[
+  (n0(R), "SOURCE":a#any)
+  |
+]
+interface = {
+  n0
+}
+
+pickTarget
+(
+  a, b, c : list
+)
+[
+  (n0(R), "SOURCE":a#any)
+  (n1, b#any)
+  |
+  (e0, n0, n1, c#any)
+]
+=>
+[
+  (n0(R), "SOURCE":a#any)
+  (n1(R), "TARGET":b#any)
+  |
+  (e0, n0, n1, c#any)
+]
+interface = {
+  n0, n1
+}
+
+pickNewTarget
+(
+  a, b, c : list
+)
+[
+  (n0(R), "SOURCE":a#any)
+  (n1, b#any)
+  |
+]
+=>
+[
+  (n0(R), "SOURCE":a#any)
+  (n1(R), "NEWTARGET":b#any)
+  |
+]
+interface = {
+  n0, n1
+}
+where not edge(n0, n1)
+
+mutateEdge
+(
+ a, b, c, d : list
+)
+[1.0]
+[
+  (n0(R), "SOURCE":a#any)
+  (n1(R), "TARGET":b#any)
+  (n2(R), "NEWTARGET":d#any)
+  |
+  (e0, n0, n1, c#any)
+]
+=>
+[
+  (n0, a#any)
+  (n1, b#any)
+  (n2, d#any)
+  |
+  (e0, n0, n2, c#any)
+]
+interface = {
+  n0, n1, n2
+}

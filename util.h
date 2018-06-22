@@ -18,7 +18,8 @@
 
 #include "ESN/esn.h"
 
-static double gauss(void);
+double bound(double val, double min, double max);
+double gauss(void);
 
 Graph* build_empty_host_graph();
 Graph* duplicate_graph(Graph *graph);

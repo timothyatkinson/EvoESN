@@ -1,0 +1,64 @@
+Main = [pickEdge]; {switchRed, switchGreen}
+
+pickEdge
+(
+ a, b, c : list
+)
+[
+  (n0, a#any)
+  (n1, b#any)
+  |
+  (e0, n0, n1, c#any)
+]
+=>
+[
+  (n0, a#any)
+  (n1, b#any)
+  |
+  (e0, n0, n1, "MUTATE":c#any)
+]
+interface = {
+  n0, n1
+}
+
+switchRed
+(
+  a, b, c : list
+)
+[
+  (n0, a#any)
+  (n1, b#any)
+  |
+  (e0, n0, n1, "MUTATE":c#red)
+]
+=>
+[
+  (n0, a#any)
+  (n1, b#any)
+  |
+  (e0, n0, n1, c#green)
+]
+interface = {
+  n0, n1
+}
+
+switchGreen
+(
+  a, b, c : list
+)
+[
+  (n0, a#any)
+  (n1, b#any)
+  |
+  (e0, n0, n1, "MUTATE":c#green)
+]
+=>
+[
+  (n0, a#any)
+  (n1, b#any)
+  |
+  (e0, n0, n1, c#red)
+]
+interface = {
+  n0, n1
+}
